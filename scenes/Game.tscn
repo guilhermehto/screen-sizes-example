@@ -1,210 +1,73 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://scripts/Player.gd" type="Script" id=1]
-[ext_resource path="res://sprites/roguelikeChar_transparent.png" type="Texture" id=2]
-[ext_resource path="res://scenes/Spawner.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/MouseButtons.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/EnemySpawners.tscn" type="PackedScene" id=3]
 
 [node name="Game" type="Node" index="0"]
 
-[node name="Player" type="Node2D" parent="." index="0"]
+__meta__ = {
+"_edit_horizontal_guides_": [  ]
+}
+
+[node name="Interface" type="Control" parent="." index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="TouchButtons" parent="Interface" index="0" instance=ExtResource( 1 )]
+
+[node name="Level" type="Node" parent="." index="1"]
+
+[node name="Player" parent="Level" index="0" instance=ExtResource( 2 )]
+
+position = Vector2( 320, 280 )
+
+[node name="EnemySpawners" parent="Level" index="1" instance=ExtResource( 3 )]
+
+position = Vector2( 0, -1 )
+
+[node name="Walls" type="StaticBody2D" parent="Level" index="2"]
 
 editor/display_folded = true
-position = Vector2( 320, 230 )
-scale = Vector2( 5, 5 )
-z_index = 1
-script = ExtResource( 1 )
-_sections_unfolded = [ "Transform", "Z Index" ]
-__meta__ = {
-"_edit_group_": true
-}
-speed = 150
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
 
-[node name="Body" type="Sprite" parent="Player" index="0"]
+[node name="TopWall" type="CollisionPolygon2D" parent="Level/Walls" index="0"]
 
-texture = ExtResource( 2 )
-region_enabled = true
-region_rect = Rect2( 0, 2, 16, 14 )
-_sections_unfolded = [ "Region" ]
+build_mode = 0
+polygon = PoolVector2Array( -20, 0, 660, 0, 660, -20, -20, -20 )
 
-[node name="Helmet" type="Sprite" parent="Player" index="1"]
+[node name="LeftWall" type="CollisionPolygon2D" parent="Level/Walls" index="1"]
 
-position = Vector2( 0, -5 )
-texture = ExtResource( 2 )
-region_enabled = true
-region_rect = Rect2( 480, 0, 10, 8 )
-_sections_unfolded = [ "Region" ]
+build_mode = 0
+polygon = PoolVector2Array( -20, 500, 0, 500, 0, -20, -20, -20 )
 
-[node name="Pants" type="Sprite" parent="Player" index="2"]
+[node name="BottomWall" type="CollisionPolygon2D" parent="Level/Walls" index="2"]
 
-position = Vector2( 0, 6 )
-texture = ExtResource( 2 )
-region_enabled = true
-region_rect = Rect2( 55, 47, 10, 3 )
-_sections_unfolded = [ "Region" ]
+position = Vector2( 0, 510 )
+build_mode = 0
+polygon = PoolVector2Array( -20, -10, 660, -10, 660, -30, -20, -30 )
 
-[node name="Armor" type="Sprite" parent="Player" index="3"]
+[node name="RightWall" type="CollisionPolygon2D" parent="Level/Walls" index="3"]
 
-position = Vector2( 0, 2 )
-texture = ExtResource( 2 )
-region_enabled = true
-region_rect = Rect2( 290, 91, 16, 9 )
-_sections_unfolded = [ "Region" ]
+position = Vector2( 0, 510 )
+build_mode = 0
+polygon = PoolVector2Array( 640, -530, 640, -10, 660, -10, 660, -530 )
 
-[node name="Shield" type="Sprite" parent="Player" index="4"]
-
-position = Vector2( -7, 3 )
-texture = ExtResource( 2 )
-region_enabled = true
-region_rect = Rect2( 585, 23, 10, 9 )
-_sections_unfolded = [ "Region" ]
-
-[node name="Weapon" type="Sprite" parent="Player" index="5"]
-
-position = Vector2( 7, 3 )
-texture = ExtResource( 2 )
-region_enabled = true
-region_rect = Rect2( 834, 20, 6, 9 )
-_sections_unfolded = [ "Region" ]
-
-[node name="MoveRight" type="Button" parent="." index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 534.0
-margin_top = 411.0
-margin_right = 622.0
-margin_bottom = 458.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Right >"
-flat = false
-align = 1
-
-[node name="MoveLeft" type="Button" parent="." index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 430.0
-margin_top = 411.0
-margin_right = 518.0
-margin_bottom = 458.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "< Left"
-flat = false
-align = 1
-
-[node name="MoveUp" type="Button" parent="." index="3"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 26.0
-margin_top = 349.0
-margin_right = 114.0
-margin_bottom = 396.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Up"
-flat = false
-align = 1
-_sections_unfolded = [ "Anchor", "Grow Direction", "Rect" ]
-
-[node name="MoveDown" type="Button" parent="." index="4"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 26.0
-margin_top = 411.0
-margin_right = 114.0
-margin_bottom = 458.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Down"
-flat = false
-align = 1
-_sections_unfolded = [ "Rect" ]
-
-[node name="SpawnerLeft" parent="." index="5" instance=ExtResource( 3 )]
-
-position = Vector2( -143, 148 )
-direction = 2
-
-[node name="SpawnerTop" parent="." index="6" instance=ExtResource( 3 )]
-
-position = Vector2( 168, -153 )
-_sections_unfolded = [ "Transform" ]
-direction = 0
-
-[node name="SpawnerRight" parent="." index="7" instance=ExtResource( 3 )]
-
-position = Vector2( 818, 321 )
-_sections_unfolded = [ "Transform" ]
-direction = 3
-
-[node name="SpawnerBottom" parent="." index="8" instance=ExtResource( 3 )]
-
-position = Vector2( 479, 674 )
-_sections_unfolded = [ "Transform" ]
-direction = 1
-
-[connection signal="button_down" from="MoveRight" to="Player" method="_on_MoveRight_button_down"]
-
-[connection signal="button_up" from="MoveRight" to="Player" method="_on_Horizontal_button_up"]
-
-[connection signal="button_down" from="MoveLeft" to="Player" method="_on_MoveLeft_button_down"]
-
-[connection signal="button_up" from="MoveLeft" to="Player" method="_on_Horizontal_button_up"]
-
-[connection signal="button_down" from="MoveUp" to="Player" method="_on_MoveUp_button_down"]
-
-[connection signal="button_up" from="MoveUp" to="Player" method="_on_Vertical_button_up"]
-
-[connection signal="button_down" from="MoveDown" to="Player" method="_on_MoveDown_button_down"]
-
-[connection signal="button_up" from="MoveDown" to="Player" method="_on_Vertical_button_up"]
+[connection signal="input_direction_changed" from="Interface/TouchButtons" to="Level/Player" method="_on_TouchButtons_input_direction_changed"]
 
 

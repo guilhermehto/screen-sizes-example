@@ -1,11 +1,14 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://scripts/Spawner.gd" type="Script" id=1]
+[ext_resource path="res://scripts/EnemySpawner.gd" type="Script" id=1]
 
-[node name="Spawner" type="Node2D"]
+
+[node name="Spawner" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 direction = null
+MINIMUM_SPAWN_INTERVAL = 1.5
+MAXIMUM_SPAWN_INTERVAL = 3
 
 [node name="SpawnInterval" type="Timer" parent="." index="0"]
 
